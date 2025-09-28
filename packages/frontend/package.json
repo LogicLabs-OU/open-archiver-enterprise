@@ -1,6 +1,7 @@
 {
 	"name": "@open-archiver/frontend",
 	"private": true,
+	"license": "SEE LICENSE IN LICENSE-AGPL.txt",
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {

@@ -6,14 +6,17 @@
 	import { page } from '$app/state';
 	import ThemeSwitcher from '$lib/components/custom/ThemeSwitcher.svelte';
 	import { t } from '$lib/translations';
-	const navItems: {
+
+	interface NavItem {
 		href?: string;
 		label: string;
 		subMenu?: {
 			href: string;
 			label: string;
 		}[];
-	}[] = [
+	}
+
+	const baseNavItems: NavItem[] = [
 		{ href: '/dashboard', label: $t('app.layout.dashboard') },
 		{ href: '/dashboard/ingestions', label: $t('app.layout.ingestions') },
 		{ href: '/dashboard/archived-emails', label: $t('app.layout.archived_emails') },
@@ -40,6 +43,15 @@
 			],
 		},
 	];
+
+	const enterpriseNavItems: NavItem[] = [
+		{ href: '/dashboard/compliance-center', label: 'Compliance Center' },
+	];
+
+	let navItems: NavItem[] = $state(baseNavItems);
+	if (import.meta.env.VITE_ENTERPRISE_MODE) {
+		navItems = [...baseNavItems, ...enterpriseNavItems];
+	}
 	let { children } = $props();
 	function handleLogout() {
 		authStore.logout();

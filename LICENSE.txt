@@ -1,0 +1,7 @@
+Source code in this repository is variously licensed under the GNU Affero General Public License (AGPL), or the Open Archiver Commercial License.
+
+* Outside of the top-level "packages/enterprise" directories, source code in a given file is licensed under the AGPL. The full text of this license can be found in the file LICENSE-AGPL.txt.
+
+* Within the top-level "packages/enterprise" directories, source code in a given file is licensed under the Open Archiver Commercial License, unless otherwise noted.
+
+When built, binary files are generated for the AGPL source code and the Open Archiver Commercial License source code. Binaries located at hub.docker.com/logiclabs/open-archiver with an "-enterprise" tag are released under the Open Archiver Commercial License. All other binaries are released under the AGPL.

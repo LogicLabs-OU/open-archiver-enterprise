@@ -2,10 +2,14 @@
 	"name": "open-archiver",
 	"version": "0.3.4",
 	"private": true,
+	"license": "SEE LICENSE IN LICENSE-AGPL.txt",
 	"scripts": {
-		"dev": "dotenv -- pnpm --filter \"./packages/*\" --parallel dev",
-		"build": "pnpm --filter \"./packages/*\" build",
-		"start": "dotenv -- pnpm --filter \"./packages/*\" --parallel start",
+		"build:oss": "pnpm --filter \"./packages/*\" --filter \"!./packages/enterprise\" --filter \"./apps/open-archiver\" build",
+		"build:enterprise": "cross-env VITE_ENTERPRISE_MODE=true pnpm build",
+		"start:oss": "dotenv -- concurrently \"node apps/open-archiver/dist/index.js\" \"pnpm --filter @open-archiver/frontend start\"",
+		"start:enterprise": "dotenv -- concurrently \"node apps/open-archiver-enterprise/dist/index.js\" \"pnpm --filter @open-archiver/frontend start\"",
+		"dev:enterprise": "cross-env VITE_ENTERPRISE_MODE=true dotenv -- pnpm --filter \"@open-archiver/frontend\" --filter \"open-archiver-enterprise-app\" --parallel dev",
+		"dev:oss": "dotenv -- pnpm --filter \"@open-archiver/frontend\" --filter \"open-archiver-app\" --parallel dev",
 		"start:workers": "dotenv -- concurrently \"pnpm --filter @open-archiver/backend start:ingestion-worker\" \"pnpm --filter @open-archiver/backend start:indexing-worker\" \"pnpm --filter @open-archiver/backend start:sync-scheduler\"",
 		"start:workers:dev": "dotenv -- concurrently \"pnpm --filter @open-archiver/backend start:ingestion-worker:dev\" \"pnpm --filter @open-archiver/backend start:indexing-worker:dev\" \"pnpm --filter @open-archiver/backend start:sync-scheduler:dev\"",
 		"db:generate": "dotenv -- pnpm --filter @open-archiver/backend db:generate",
@@ -23,6 +27,7 @@
 		"dotenv-cli": "8.0.0"
 	},
 	"devDependencies": {
+		"cross-env": "^10.0.0",
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.14",
