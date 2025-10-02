@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { ArchivedEmailService } from '../../services/ArchivedEmailService';
 import { config } from '../../config';
+import { UserService } from '../../services/UserService';
 
 export class ArchivedEmailController {
+	private userService = new UserService();
 	public getArchivedEmails = async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const { ingestionSourceId } = req.params;
@@ -35,8 +37,17 @@ export class ArchivedEmailController {
 			if (!userId) {
 				return res.status(401).json({ message: req.t('errors.unauthorized') });
 			}
+			const actor = await this.userService.findById(userId);
+			if (!actor) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
 
-			const email = await ArchivedEmailService.getArchivedEmailById(id, userId);
+			const email = await ArchivedEmailService.getArchivedEmailById(
+				id,
+				userId,
+				actor,
+				req.ip || 'unknown'
+			);
 			if (!email) {
 				return res.status(404).json({ message: req.t('archivedEmail.notFound') });
 			}
@@ -53,7 +64,15 @@ export class ArchivedEmailController {
 		}
 		try {
 			const { id } = req.params;
-			await ArchivedEmailService.deleteArchivedEmail(id);
+			const userId = req.user?.sub;
+			if (!userId) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const actor = await this.userService.findById(userId);
+			if (!actor) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			await ArchivedEmailService.deleteArchivedEmail(id, actor, req.ip || 'unknown');
 			return res.status(204).send();
 		} catch (error) {
 			console.error(`Delete archived email ${req.params.id} error:`, error);

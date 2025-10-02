@@ -148,6 +148,13 @@
       "when": 1757860242528,
       "tag": "0020_panoramic_wolverine",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1759412986134,
+      "tag": "0021_nosy_veda",
+      "breakpoints": true
     }
   ]
 }

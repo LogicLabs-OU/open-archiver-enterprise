@@ -62,7 +62,8 @@
 		};
 	}
 
-	function handleSearch() {
+	function handleSearch(e: SubmitEvent) {
+		e.preventDefault();
 		const params = new URLSearchParams();
 		params.set('keywords', keywords);
 		params.set('page', '1');
@@ -179,7 +180,7 @@
 <div class="container mx-auto p-4 md:p-8">
 	<h1 class="mb-4 text-2xl font-bold">{$t('app.search.email_search')}</h1>
 
-	<form onsubmit={handleSearch} class="mb-8 flex flex-col space-y-2">
+	<form onsubmit={(e) => handleSearch(e)} class="mb-8 flex flex-col space-y-2">
 		<div class="flex items-center gap-2">
 			<Input
 				type="search"

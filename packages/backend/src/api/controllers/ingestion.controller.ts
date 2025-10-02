@@ -8,8 +8,10 @@ import {
 } from '@open-archiver/types';
 import { logger } from '../../config/logger';
 import { config } from '../../config';
+import { UserService } from '../../services/UserService';
 
 export class IngestionController {
+	private userService = new UserService();
 	/**
 	 * Converts an IngestionSource object to a safe version for client-side consumption
 	 * by removing the credentials.
@@ -31,7 +33,11 @@ export class IngestionController {
 			if (!userId) {
 				return res.status(401).json({ message: req.t('errors.unauthorized') });
 			}
-			const newSource = await IngestionService.create(dto, userId);
+			const actor = await this.userService.findById(userId);
+			if (!actor) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const newSource = await IngestionService.create(dto, userId, actor, req.ip || 'unknown');
 			const safeSource = this.toSafeIngestionSource(newSource);
 			return res.status(201).json(safeSource);
 		} catch (error: any) {
@@ -80,7 +86,15 @@ export class IngestionController {
 		try {
 			const { id } = req.params;
 			const dto: UpdateIngestionSourceDto = req.body;
-			const updatedSource = await IngestionService.update(id, dto);
+			const userId = req.user?.sub;
+			if (!userId) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const actor = await this.userService.findById(userId);
+			if (!actor) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const updatedSource = await IngestionService.update(id, dto, actor, req.ip || 'unknown');
 			const safeSource = this.toSafeIngestionSource(updatedSource);
 			return res.status(200).json(safeSource);
 		} catch (error) {
@@ -98,7 +112,15 @@ export class IngestionController {
 		}
 		try {
 			const { id } = req.params;
-			await IngestionService.delete(id);
+			const userId = req.user?.sub;
+			if (!userId) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const actor = await this.userService.findById(userId);
+			if (!actor) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			await IngestionService.delete(id, actor, req.ip || 'unknown');
 			return res.status(204).send();
 		} catch (error) {
 			console.error(`Delete ingestion source ${req.params.id} error:`, error);
@@ -132,7 +154,20 @@ export class IngestionController {
 		}
 		try {
 			const { id } = req.params;
-			const updatedSource = await IngestionService.update(id, { status: 'paused' });
+			const userId = req.user?.sub;
+			if (!userId) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const actor = await this.userService.findById(userId);
+			if (!actor) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const updatedSource = await IngestionService.update(
+				id,
+				{ status: 'paused' },
+				actor,
+				req.ip || 'unknown'
+			);
 			const safeSource = this.toSafeIngestionSource(updatedSource);
 			return res.status(200).json(safeSource);
 		} catch (error) {
@@ -150,7 +185,15 @@ export class IngestionController {
 		}
 		try {
 			const { id } = req.params;
-			await IngestionService.triggerForceSync(id);
+			const userId = req.user?.sub;
+			if (!userId) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			const actor = await this.userService.findById(userId);
+			if (!actor) {
+				return res.status(401).json({ message: req.t('errors.unauthorized') });
+			}
+			await IngestionService.triggerForceSync(id, actor, req.ip || 'unknown');
 			return res.status(202).json({ message: req.t('ingestion.forceSyncTriggered') });
 		} catch (error) {
 			console.error(`Trigger force sync for ${req.params.id} error:`, error);

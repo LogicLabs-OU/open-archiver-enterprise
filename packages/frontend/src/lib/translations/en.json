@@ -287,6 +287,34 @@
 			"indexed_insights": "Indexed insights",
 			"top_10_senders": "Top 10 Senders",
 			"no_indexed_insights": "No indexed insights available."
+		},
+		"audit_log": {
+			"title": "Audit Log",
+			"header": "Audit Log",
+			"verify_integrity": "Verify Log Integrity",
+			"log_entries": "Log Entries",
+			"timestamp": "Timestamp",
+			"actor": "Actor",
+			"action": "Action",
+			"target": "Target",
+			"details": "Details",
+			"ip_address": "IP Address",
+			"target_type": "Target Type",
+			"target_id": "Target ID",
+			"no_logs_found": "No audit logs found.",
+			"prev": "Prev",
+			"next": "Next",
+			"log_entry_details": "Log Entry Details",
+			"viewing_details_for": "Viewing the complete details for log entry #",
+			"actor_id": "Actor ID",
+			"previous_hash": "Previous Hash",
+			"current_hash": "Current Hash",
+			"close": "Close",
+			"verification_successful_title": "Verification Successful",
+			"verification_successful_message": "Audit log integrity verified successfully.",
+			"verification_failed_title": "Verification Failed",
+			"verification_failed_message": "The audit log integrity check failed. Please review the system logs for more details.",
+			"verification_error_message": "An unexpected error occurred during verification. Please try again."
 		}
 	}
 }

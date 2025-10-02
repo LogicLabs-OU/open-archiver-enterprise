@@ -8,6 +8,7 @@ declare global {
 		interface Locals {
 			user: Omit<User, 'passwordHash'> | null;
 			accessToken: string | null;
+			enterpriseMode: boolean | null;
 		}
 		// interface PageData {}
 		// interface PageState {}
@@ -15,4 +16,4 @@ declare global {
 	}
 }
 
-export {};
+export { };

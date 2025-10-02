@@ -20,6 +20,7 @@ export default defineConfig({
 				rewrite: (path) => path.replace(/^\/api/, ''),
 			},
 		},
+		allowedHosts: ['2b449016927c.ngrok-free.app']
 	},
 	ssr: {
 		noExternal: ['layerchart'],

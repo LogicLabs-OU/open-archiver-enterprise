@@ -1,8 +1,10 @@
 import type { Request, Response } from 'express';
 import { SettingsService } from '../../services/SettingsService';
 import { config } from '../../config';
+import { UserService } from '../../services/UserService';
 
 const settingsService = new SettingsService();
+const userService = new UserService();
 
 export const getSystemSettings = async (req: Request, res: Response) => {
 	try {
@@ -20,7 +22,18 @@ export const updateSystemSettings = async (req: Request, res: Response) => {
 		if (config.app.isDemo) {
 			return res.status(403).json({ message: req.t('errors.demoMode') });
 		}
-		const updatedSettings = await settingsService.updateSystemSettings(req.body);
+		if (!req.user || !req.user.sub) {
+			return res.status(401).json({ message: 'Unauthorized' });
+		}
+		const actor = await userService.findById(req.user.sub);
+		if (!actor) {
+			return res.status(401).json({ message: 'Unauthorized' });
+		}
+		const updatedSettings = await settingsService.updateSystemSettings(
+			req.body,
+			actor,
+			req.ip || 'unknown'
+		);
 		res.status(200).json(updatedSettings);
 	} catch (error) {
 		// A more specific error could be logged here

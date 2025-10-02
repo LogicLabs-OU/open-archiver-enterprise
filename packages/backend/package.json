@@ -7,6 +7,7 @@
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "tsc && pnpm copy-assets",
+		"dev": "tsc --watch",
 		"copy-assets": "cp -r src/locales dist/locales",
 		"start:ingestion-worker": "node dist/workers/ingestion.worker.js",
 		"start:indexing-worker": "node dist/workers/indexing.worker.js",
@@ -58,7 +59,6 @@
 		"pst-extractor": "^1.11.0",
 		"reflect-metadata": "^0.2.2",
 		"sqlite3": "^5.1.7",
-		"tsconfig-paths": "^4.2.0",
 		"xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
 		"yauzl": "^3.2.0",
 		"zod": "^4.1.5"
@@ -75,6 +75,7 @@
 		"@types/node": "^24.0.12",
 		"@types/yauzl": "^2.10.3",
 		"ts-node-dev": "^2.0.0",
+		"tsconfig-paths": "^4.2.0",
 		"typescript": "^5.8.3"
 	}
 }

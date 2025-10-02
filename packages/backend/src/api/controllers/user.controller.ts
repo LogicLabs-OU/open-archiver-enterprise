@@ -5,6 +5,7 @@ import { sql } from 'drizzle-orm';
 import { db } from '../../database';
 import { config } from '../../config';
 
+
 const userService = new UserService();
 
 export const getUsers = async (req: Request, res: Response) => {
@@ -25,10 +26,19 @@ export const createUser = async (req: Request, res: Response) => {
 		return res.status(403).json({ message: req.t('errors.demoMode') });
 	}
 	const { email, first_name, last_name, password, roleId } = req.body;
+	if (!req.user || !req.user.sub) {
+		return res.status(401).json({ message: 'Unauthorized' });
+	}
+	const actor = await userService.findById(req.user.sub);
+	if (!actor) {
+		return res.status(401).json({ message: 'Unauthorized' });
+	}
 
 	const newUser = await userService.createUser(
 		{ email, first_name, last_name, password },
-		roleId
+		roleId,
+		actor,
+		req.ip || 'unknown'
 	);
 	res.status(201).json(newUser);
 };
@@ -38,10 +48,19 @@ export const updateUser = async (req: Request, res: Response) => {
 		return res.status(403).json({ message: req.t('errors.demoMode') });
 	}
 	const { email, first_name, last_name, roleId } = req.body;
+	if (!req.user || !req.user.sub) {
+		return res.status(401).json({ message: 'Unauthorized' });
+	}
+	const actor = await userService.findById(req.user.sub);
+	if (!actor) {
+		return res.status(401).json({ message: 'Unauthorized' });
+	}
 	const updatedUser = await userService.updateUser(
 		req.params.id,
 		{ email, first_name, last_name },
-		roleId
+		roleId,
+		actor,
+		req.ip || 'unknown'
 	);
 	if (!updatedUser) {
 		return res.status(404).json({ message: req.t('user.notFound') });
@@ -61,6 +80,13 @@ export const deleteUser = async (req: Request, res: Response) => {
 			message: req.t('user.cannotDeleteOnlyUser'),
 		});
 	}
-	await userService.deleteUser(req.params.id);
+	if (!req.user || !req.user.sub) {
+		return res.status(401).json({ message: 'Unauthorized' });
+	}
+	const actor = await userService.findById(req.user.sub);
+	if (!actor) {
+		return res.status(401).json({ message: 'Unauthorized' });
+	}
+	await userService.deleteUser(req.params.id, actor, req.ip || 'unknown');
 	res.status(204).send();
 };

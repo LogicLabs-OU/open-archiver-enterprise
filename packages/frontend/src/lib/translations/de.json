@@ -255,6 +255,28 @@
 			"no_emails_found": "Keine archivierten E-Mails gefunden.",
 			"prev": "Zurück",
 			"next": "Weiter"
+		},
+		"audit_log": {
+			"title": "Audit-Protokoll",
+			"header": "Audit-Protokoll",
+			"verify_integrity": "Integrität überprüfen",
+			"log_entries": "Protokolleinträge",
+			"timestamp": "Zeitstempel",
+			"actor": "Akteur",
+			"action": "Aktion",
+			"target": "Ziel",
+			"details": "Details",
+			"ip_address": "IP Adresse",
+			"target_type": "Zieltyp",
+			"target_id": "Ziel-ID",
+			"no_logs_found": "Keine Audit-Protokolle gefunden.",
+			"prev": "Zurück",
+			"next": "Weiter",
+			"verification_successful_title": "Überprüfung erfolgreich",
+			"verification_successful_message": "Die Integrität des Audit-Protokolls wurde erfolgreich überprüft.",
+			"verification_failed_title": "Überprüfung fehlgeschlagen",
+			"verification_failed_message": "Die Integritätsprüfung des Audit-Protokolls ist fehlgeschlagen. Bitte überprüfen Sie die Systemprotokolle für weitere Details.",
+			"verification_error_message": "Während der Überprüfung ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut."
 		}
 	}
 }

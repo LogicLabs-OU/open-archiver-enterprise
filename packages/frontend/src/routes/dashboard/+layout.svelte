@@ -6,6 +6,8 @@
 	import { page } from '$app/state';
 	import ThemeSwitcher from '$lib/components/custom/ThemeSwitcher.svelte';
 	import { t } from '$lib/translations';
+	import type { LayoutData } from '../$types';
+	let { data, children } = $props();
 
 	interface NavItem {
 		href?: string;
@@ -45,14 +47,19 @@
 	];
 
 	const enterpriseNavItems: NavItem[] = [
-		{ href: '/dashboard/compliance-center', label: 'Compliance Center' },
+		{
+			label: 'Compliance',
+			subMenu: [
+				{ href: '/dashboard/compliance-center', label: 'Compliance Center' },
+				{ href: '/dashboard/compliance/audit-log', label: 'Audit Log' },
+			],
+		},
 	];
 
 	let navItems: NavItem[] = $state(baseNavItems);
-	if (import.meta.env.VITE_ENTERPRISE_MODE) {
+	if (data.enterpriseMode) {
 		navItems = [...baseNavItems, ...enterpriseNavItems];
 	}
-	let { children } = $props();
 	function handleLogout() {
 		authStore.logout();
 		goto('/signin');

@@ -6,7 +6,6 @@ import { ArchivedEmailController } from './controllers/archived-email.controller
 import { StorageController } from './controllers/storage.controller';
 import { SearchController } from './controllers/search.controller';
 import { IamController } from './controllers/iam.controller';
-import { requireAuth } from './middleware/requireAuth';
 import { createAuthRouter } from './routes/auth.routes';
 import { createIamRouter } from './routes/iam.routes';
 import { createIngestionRouter } from './routes/ingestion.routes';
@@ -19,6 +18,7 @@ import { createUserRouter } from './routes/user.routes';
 import { createSettingsRouter } from './routes/settings.routes';
 import { apiKeyRoutes } from './routes/api-key.routes';
 import { AuthService } from '../services/AuthService';
+import { AuditService } from '../services/AuditService';
 import { UserService } from '../services/UserService';
 import { IamService } from '../services/IamService';
 import { StorageService } from '../services/StorageService';
@@ -33,9 +33,11 @@ import { rateLimiter } from './middleware/rateLimiter';
 import { config } from '../config';
 // Define the "plugin" interface
 export interface ArchiverModule {
-    initialize: (app: Express) => Promise<void>;
+    initialize: (app: Express, authService: AuthService) => Promise<void>;
     name: string;
 }
+
+export let authService: AuthService;
 
 export async function createServer(modules: ArchiverModule[] = []): Promise<Express> {
     // Load environment variables
@@ -51,8 +53,9 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
     }
 
     // --- Dependency Injection Setup ---
+    const auditService = new AuditService();
     const userService = new UserService();
-    const authService = new AuthService(userService, JWT_SECRET, JWT_EXPIRES_IN);
+    authService = new AuthService(userService, auditService, JWT_SECRET, JWT_EXPIRES_IN);
     const authController = new AuthController(authService, userService);
     const ingestionController = new IngestionController();
     const archivedEmailController = new ArchivedEmailController();
@@ -89,6 +92,10 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
     await searchService.configureEmailIndex();
 
     const app = express();
+
+    // Trust the proxy to get the real IP address of the client.
+    // This is important for audit logging and security.
+    app.set('trust proxy', true);
 
     // --- Routes ---
     const authRouter = createAuthRouter(authController);
@@ -132,7 +139,7 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
     app.use(`/${config.api.version}/users`, userRouter);
     // Load all provided extension modules
     for (const module of modules) {
-        await module.initialize(app);
+        await module.initialize(app, authService);
         console.log(`🏢 Enterprise module loaded: ${module.name}`);
     }
 
