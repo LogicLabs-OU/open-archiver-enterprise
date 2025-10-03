@@ -62,6 +62,10 @@ Now, open the `.env` file in a text editor and customize the settings.
     ```bash
     openssl rand -hex 32
     ```
+- `STORAGE_ENCRYPTION_KEY`: **(Optional but Recommended)** A 32-byte hex string for encrypting emails and attachments at rest. If this key is not provided, storage encryption will be disabled. You can generate one with:
+    ```bash
+    openssl rand -hex 32
+    ```
 
 ### Storage Configuration
 
@@ -117,13 +121,14 @@ These variables are used by `docker-compose.yml` to configure the services.
 | ------------------------------ | ----------------------------------------------------------------------------------------------------------- | ------------------------- |
 | `STORAGE_TYPE`                 | The storage backend to use (`local` or `s3`).                                                               | `local`                   |
 | `BODY_SIZE_LIMIT`              | The maximum request body size for uploads. Can be a number in bytes or a string with a unit (e.g., `100M`). | `100M`                    |
-| `STORAGE_LOCAL_ROOT_PATH`      | The root path for local file storage.                                                                       | `/var/data/open-archiver` |
+| `STORAGE_LOCAL_ROOT_PATH`      | The root path for Open Archiver app data.                                                                   | `/var/data/open-archiver` |
 | `STORAGE_S3_ENDPOINT`          | The endpoint for S3-compatible storage (required if `STORAGE_TYPE` is `s3`).                                |                           |
 | `STORAGE_S3_BUCKET`            | The bucket name for S3-compatible storage (required if `STORAGE_TYPE` is `s3`).                             |                           |
 | `STORAGE_S3_ACCESS_KEY_ID`     | The access key ID for S3-compatible storage (required if `STORAGE_TYPE` is `s3`).                           |                           |
 | `STORAGE_S3_SECRET_ACCESS_KEY` | The secret access key for S3-compatible storage (required if `STORAGE_TYPE` is `s3`).                       |                           |
 | `STORAGE_S3_REGION`            | The region for S3-compatible storage (required if `STORAGE_TYPE` is `s3`).                                  |                           |
 | `STORAGE_S3_FORCE_PATH_STYLE`  | Force path-style addressing for S3 (optional).                                                              | `false`                   |
+| `STORAGE_ENCRYPTION_KEY`       | A 32-byte hex string for AES-256 encryption of files at rest. If not set, files will not be encrypted.      |                           |
 
 #### Security & Authentication
 

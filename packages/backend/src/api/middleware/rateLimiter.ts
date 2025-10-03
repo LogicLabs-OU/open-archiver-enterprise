@@ -8,7 +8,7 @@ export const rateLimiter = rateLimit({
 	max: config.api.rateLimit.max,
 	keyGenerator: (req, res) => {
 		// Use the real IP address of the client, even if it's behind a proxy.
-		// This is safe because we have `app.set('trust proxy', true)` in `server.ts`.
+		// `app.set('trust proxy', true)` in `server.ts`.
 		return ipKeyGenerator(req.ip || 'unknown');
 	},
 	message: {
