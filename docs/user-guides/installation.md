@@ -17,7 +17,22 @@ git clone https://github.com/LogicLabs-OU/OpenArchiver.git
 cd OpenArchiver
 ```
 
-## 2. Configure Your Environment
+## 2. Create a Directory for Local Storage (Important)
+
+Before configuring the application, you **must** create a directory on your host machine where Open Archiver will store its data (such as emails and attachments). Manually creating this directory helps prevent potential permission issues.
+
+Foe examples, you can use this path `/var/data/open-archiver`.
+
+Run the following commands to create the directory and set the correct permissions:
+
+```bash
+sudo mkdir -p /var/data/open-archiver
+sudo chown -R $(id -u):$(id -g) /var/data/open-archiver
+```
+
+This ensures the directory is owned by your current user, which is necessary for the application to have write access. You will set this path in your `.env` file in the next step.
+
+## 3. Configure Your Environment
 
 The application is configured using environment variables. You'll need to create a `.env` file to store your configuration.
 
@@ -29,9 +44,15 @@ cp .env.example.docker .env
 
 Now, open the `.env` file in a text editor and customize the settings.
 
-### Important Configuration
+### Key Configuration Steps
 
-You must change the following placeholder values to secure your instance:
+1.  **Set the Storage Path**: Find the `STORAGE_LOCAL_ROOT_PATH` variable and set it to the path you just created.
+
+    ```env
+    STORAGE_LOCAL_ROOT_PATH=/var/data/open-archiver
+    ```
+
+2.  **Secure Your Instance**: You must change the following placeholder values to secure your instance:
 
 - `POSTGRES_PASSWORD`: A strong, unique password for the database.
 - `REDIS_PASSWORD`: A strong, unique password for the Valkey/Redis service.
@@ -121,7 +142,7 @@ These variables are used by `docker-compose.yml` to configure the services.
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | `TIKA_URL` | Optional. The URL of an Apache Tika server for advanced text extraction from attachments. If not set, the application falls back to built-in parsers for PDF, Word, and Excel files. | `http://tika:9998` |
 
-## 3. Run the Application
+## 4. Run the Application
 
 Once you have configured your `.env` file, you can start all the services using Docker Compose:
 
@@ -141,7 +162,7 @@ You can check the status of the running containers with:
 docker compose ps
 ```
 
-## 4. Access the Application
+## 5. Access the Application
 
 Once the services are running, you can access the Open Archiver web interface by navigating to `http://localhost:3000` in your web browser.
 
@@ -149,7 +170,7 @@ Upon first visit, you will be redirected to the `/setup` page where you can set 
 
 If you are not redirected to the `/setup` page but instead see the login page, there might be something wrong with the database. Restart the service and try again.
 
-## 5. Next Steps
+## 6. Next Steps
 
 After successfully deploying and logging into Open Archiver, the next step is to configure your ingestion sources to start archiving emails.
 
