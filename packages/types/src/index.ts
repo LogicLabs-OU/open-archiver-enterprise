@@ -10,3 +10,4 @@ export * from './iam.types';
 export * from './system.types';
 export * from './audit-log.types';
 export * from './audit-log.enums';
+export * from './integrity.types';

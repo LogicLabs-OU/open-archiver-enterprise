@@ -17,6 +17,7 @@ import { createUploadRouter } from './routes/upload.routes';
 import { createUserRouter } from './routes/user.routes';
 import { createSettingsRouter } from './routes/settings.routes';
 import { apiKeyRoutes } from './routes/api-key.routes';
+import { integrityRoutes } from './routes/integrity.routes';
 import { AuthService } from '../services/AuthService';
 import { AuditService } from '../services/AuditService';
 import { UserService } from '../services/UserService';
@@ -109,6 +110,7 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
     const userRouter = createUserRouter(authService);
     const settingsRouter = createSettingsRouter(authService);
     const apiKeyRouter = apiKeyRoutes(authService);
+    const integrityRouter = integrityRoutes(authService);
     // upload route is added before middleware because it doesn't use the json middleware.
     app.use(`/${config.api.version}/upload`, uploadRouter);
 
@@ -145,6 +147,7 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
 
     app.use(`/${config.api.version}/settings`, settingsRouter);
     app.use(`/${config.api.version}/api-keys`, apiKeyRouter);
+    app.use(`/${config.api.version}/integrity`, integrityRouter);
 
 
     app.get('/', (req, res) => {

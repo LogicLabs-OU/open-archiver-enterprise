@@ -7,7 +7,8 @@
 			"password": "Password"
 		},
 		"common": {
-			"working": "Working"
+			"working": "Working",
+			"read_docs": "Read docs"
 		},
 		"archive": {
 			"title": "Archive",
@@ -32,7 +33,14 @@
 			"deleting": "Deleting",
 			"confirm": "Confirm",
 			"cancel": "Cancel",
-			"not_found": "Email not found."
+			"not_found": "Email not found.",
+			"integrity_report": "Integrity Report",
+			"email_eml": "Email (.eml)",
+			"valid": "Valid",
+			"invalid": "Invalid",
+			"integrity_check_failed_title": "Integrity Check Failed",
+			"integrity_check_failed_message": "Could not verify the integrity of the email and its attachments.",
+			"integrity_report_description": "This report verifies that the content of your archived emails has not been altered."
 		},
 		"ingestions": {
 			"title": "Ingestion Sources",

@@ -7,7 +7,8 @@
 			"password": "Passwort"
 		},
 		"common": {
-			"working": "Arbeiten"
+			"working": "Arbeiten",
+			"read_docs": "Dokumentation lesen"
 		},
 		"archive": {
 			"title": "Archiv",
@@ -32,7 +33,14 @@
 			"deleting": "Löschen",
 			"confirm": "Bestätigen",
 			"cancel": "Abbrechen",
-			"not_found": "E-Mail nicht gefunden."
+			"not_found": "E-Mail nicht gefunden.",
+			"integrity_report": "Integritätsbericht",
+			"email_eml": "E-Mail (.eml)",
+			"valid": "Gültig",
+			"invalid": "Ungültig",
+			"integrity_check_failed_title": "Integritätsprüfung fehlgeschlagen",
+			"integrity_check_failed_message": "Die Integrität der E-Mail und ihrer Anhänge konnte nicht überprüft werden.",
+			"integrity_report_description": "Dieser Bericht überprüft, ob der Inhalt Ihrer archivierten E-Mails nicht verändert wurde."
 		},
 		"ingestions": {
 			"title": "Erfassungsquellen",

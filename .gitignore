@@ -24,3 +24,9 @@ pnpm-debug.log
 # Vitepress
 docs/.vitepress/dist
 docs/.vitepress/cache
+
+
+# TS
+tsconfig.tsbuildinfo
+packages/backend/tsconfig.tsbuildinfo
+packages/types/tsconfig.tsbuildinfo
