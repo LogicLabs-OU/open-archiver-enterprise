@@ -6,7 +6,6 @@
 	import { page } from '$app/state';
 	import ThemeSwitcher from '$lib/components/custom/ThemeSwitcher.svelte';
 	import { t } from '$lib/translations';
-	import type { LayoutData } from '../$types';
 	let { data, children } = $props();
 
 	interface NavItem {
@@ -49,10 +48,7 @@
 	const enterpriseNavItems: NavItem[] = [
 		{
 			label: 'Compliance',
-			subMenu: [
-				{ href: '/dashboard/compliance-center', label: 'Compliance Center' },
-				{ href: '/dashboard/compliance/audit-log', label: 'Audit Log' },
-			],
+			subMenu: [{ href: '/dashboard/compliance/audit-log', label: 'Audit Log' }],
 		},
 	];
 
