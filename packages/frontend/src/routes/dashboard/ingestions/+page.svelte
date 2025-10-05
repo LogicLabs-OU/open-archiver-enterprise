@@ -153,6 +153,7 @@
 						duration: 5000,
 						show: true,
 					});
+					return;
 				}
 			}
 			ingestionSources = ingestionSources.filter((s) => !selectedIds.includes(s.id));

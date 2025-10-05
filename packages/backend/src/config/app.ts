@@ -6,4 +6,5 @@ export const app = {
 	encryptionKey: process.env.ENCRYPTION_KEY,
 	isDemo: process.env.IS_DEMO === 'true',
 	syncFrequency: process.env.SYNC_FREQUENCY || '* * * * *', //default to 1 minute
+	enableDeletion: process.env.ENABLE_DELETION === 'true',
 };

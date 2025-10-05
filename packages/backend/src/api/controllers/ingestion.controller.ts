@@ -9,6 +9,7 @@ import {
 import { logger } from '../../config/logger';
 import { config } from '../../config';
 import { UserService } from '../../services/UserService';
+import { checkDeletionEnabled } from '../../helpers/deletionGuard';
 
 export class IngestionController {
 	private userService = new UserService();
@@ -111,6 +112,7 @@ export class IngestionController {
 			return res.status(403).json({ message: req.t('errors.demoMode') });
 		}
 		try {
+			checkDeletionEnabled();
 			const { id } = req.params;
 			const userId = req.user?.sub;
 			if (!userId) {
@@ -126,6 +128,8 @@ export class IngestionController {
 			console.error(`Delete ingestion source ${req.params.id} error:`, error);
 			if (error instanceof Error && error.message === 'Ingestion source not found') {
 				return res.status(404).json({ message: req.t('ingestion.notFound') });
+			} else if (error instanceof Error) {
+				return res.status(400).json({ message: error.message });
 			}
 			return res.status(500).json({ message: req.t('errors.internalServerError') });
 		}

@@ -19,6 +19,7 @@ import { SearchService } from './SearchService';
 import type { Readable } from 'stream';
 import { AuditService } from './AuditService';
 import { User } from '@open-archiver/types';
+import { checkDeletionEnabled } from '../helpers/deletionGuard';
 
 interface DbRecipients {
 	to: { name: string; address: string }[];
@@ -198,6 +199,7 @@ export class ArchivedEmailService {
 		actor: User,
 		actorIp: string
 	): Promise<void> {
+		checkDeletionEnabled();
 		const [email] = await db
 			.select()
 			.from(archivedEmails)

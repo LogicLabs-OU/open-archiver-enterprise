@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ArchivedEmailService } from '../../services/ArchivedEmailService';
 import { config } from '../../config';
 import { UserService } from '../../services/UserService';
+import { checkDeletionEnabled } from '../../helpers/deletionGuard';
 
 export class ArchivedEmailController {
 	private userService = new UserService();
@@ -63,6 +64,7 @@ export class ArchivedEmailController {
 			return res.status(403).json({ message: req.t('errors.demoMode') });
 		}
 		try {
+			checkDeletionEnabled();
 			const { id } = req.params;
 			const userId = req.user?.sub;
 			if (!userId) {

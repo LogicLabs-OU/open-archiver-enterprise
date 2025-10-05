@@ -27,6 +27,7 @@ import { config } from '../config/index';
 import { FilterBuilder } from './FilterBuilder';
 import { AuditService } from './AuditService';
 import { User } from '@open-archiver/types';
+import { checkDeletionEnabled } from '../helpers/deletionGuard';
 
 export class IngestionService {
 	private static auditService = new AuditService();
@@ -205,6 +206,7 @@ export class IngestionService {
 	}
 
 	public static async delete(id: string, actor: User, actorIp: string): Promise<IngestionSource> {
+		checkDeletionEnabled();
 		const source = await this.findById(id);
 		if (!source) {
 			throw new Error('Ingestion source not found');
