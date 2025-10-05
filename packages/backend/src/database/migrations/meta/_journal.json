@@ -155,6 +155,13 @@
       "when": 1759412986134,
       "tag": "0021_nosy_veda",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1759701622932,
+      "tag": "0022_complete_triton",
+      "breakpoints": true
     }
   ]
 }

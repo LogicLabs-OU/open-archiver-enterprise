@@ -27,6 +27,4 @@ docs/.vitepress/cache
 
 
 # TS
-tsconfig.tsbuildinfo
-packages/backend/tsconfig.tsbuildinfo
-packages/types/tsconfig.tsbuildinfo
+**/tsconfig.tsbuildinfo

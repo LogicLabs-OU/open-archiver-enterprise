@@ -6,7 +6,10 @@ import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import { streamToBuffer } from '../helpers/streamToBuffer';
 import { Readable } from 'stream';
 
-const ENCRYPTION_PREFIX = Buffer.from('oa_enc_v1::');
+/**
+ *  A unique identifier for Open Archiver encrypted files. This value SHOULD NOT BE ALTERED in future development to ensure compatibility.
+ */
+const ENCRYPTION_PREFIX = Buffer.from('oa_enc_idf_v1::');
 
 export class StorageService implements IStorageProvider {
 	private provider: IStorageProvider;

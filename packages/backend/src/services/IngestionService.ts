@@ -465,9 +465,13 @@ export class IngestionService {
 							sizeBytes: attachment.size,
 							contentHashSha256: attachmentHash,
 							storagePath: attachmentPath,
+							ingestionSourceId: source.id,
 						})
 						.onConflictDoUpdate({
-							target: attachmentsSchema.contentHashSha256,
+							target: [
+								attachmentsSchema.ingestionSourceId,
+								attachmentsSchema.contentHashSha256,
+							],
 							set: { filename: attachment.filename },
 						})
 						.returning();

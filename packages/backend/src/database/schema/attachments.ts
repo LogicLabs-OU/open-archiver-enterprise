@@ -1,15 +1,25 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, text, uuid, bigint, primaryKey } from 'drizzle-orm/pg-core';
+import { pgTable, text, uuid, bigint, primaryKey, uniqueIndex } from 'drizzle-orm/pg-core';
 import { archivedEmails } from './archived-emails';
+import { ingestionSources } from './ingestion-sources';
 
-export const attachments = pgTable('attachments', {
-	id: uuid('id').primaryKey().defaultRandom(),
-	filename: text('filename').notNull(),
-	mimeType: text('mime_type'),
-	sizeBytes: bigint('size_bytes', { mode: 'number' }).notNull(),
-	contentHashSha256: text('content_hash_sha256').notNull().unique(),
-	storagePath: text('storage_path').notNull(),
-});
+export const attachments = pgTable(
+	'attachments',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		filename: text('filename').notNull(),
+		mimeType: text('mime_type'),
+		sizeBytes: bigint('size_bytes', { mode: 'number' }).notNull(),
+		contentHashSha256: text('content_hash_sha256').notNull(),
+		storagePath: text('storage_path').notNull(),
+		ingestionSourceId: uuid('ingestion_source_id').references(() => ingestionSources.id, {
+			onDelete: 'cascade',
+		}),
+	},
+	(table) => [
+		uniqueIndex('source_hash_unique').on(table.ingestionSourceId, table.contentHashSha256),
+	]
+);
 
 export const emailAttachments = pgTable(
 	'email_attachments',
