@@ -15,13 +15,18 @@
 			href: string;
 			label: string;
 		}[];
+		position: number; // represents the position of the item in the navigation menu
 	}
 
 	const baseNavItems: NavItem[] = [
-		{ href: '/dashboard', label: $t('app.layout.dashboard') },
-		{ href: '/dashboard/ingestions', label: $t('app.layout.ingestions') },
-		{ href: '/dashboard/archived-emails', label: $t('app.layout.archived_emails') },
-		{ href: '/dashboard/search', label: $t('app.layout.search') },
+		{ href: '/dashboard', label: $t('app.layout.dashboard'), position: 0 },
+		{ href: '/dashboard/ingestions', label: $t('app.layout.ingestions'), position: 1 },
+		{
+			href: '/dashboard/archived-emails',
+			label: $t('app.layout.archived_emails'),
+			position: 2,
+		},
+		{ href: '/dashboard/search', label: $t('app.layout.search'), position: 3 },
 		{
 			label: $t('app.layout.settings'),
 			subMenu: [
@@ -42,6 +47,7 @@
 					label: $t('app.layout.api_keys'),
 				},
 			],
+			position: 5,
 		},
 	];
 
@@ -49,12 +55,13 @@
 		{
 			label: 'Compliance',
 			subMenu: [{ href: '/dashboard/compliance/audit-log', label: 'Audit Log' }],
+			position: 4,
 		},
 	];
 
 	let navItems: NavItem[] = $state(baseNavItems);
 	if (data.enterpriseMode) {
-		navItems = [...baseNavItems, ...enterpriseNavItems];
+		navItems = [...baseNavItems, ...enterpriseNavItems].sort((a, b) => a.position - b.position);
 	}
 	function handleLogout() {
 		authStore.logout();
