@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import { AuthController } from './controllers/auth.controller';
 import { IngestionController } from './controllers/ingestion.controller';
@@ -94,6 +95,14 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
 
     const app = express();
 
+    // --- CORS ---
+    app.use(
+        cors({
+            origin: process.env.APP_URL || 'http://localhost:3000',
+            credentials: true,
+        })
+    );
+
     // Trust the proxy to get the real IP address of the client.
     // This is important for audit logging and security.
     app.set('trust proxy', true);
@@ -111,8 +120,6 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
     const settingsRouter = createSettingsRouter(authService);
     const apiKeyRouter = apiKeyRoutes(authService);
     const integrityRouter = integrityRoutes(authService);
-    // upload route is added before middleware because it doesn't use the json middleware.
-    app.use(`/${config.api.version}/upload`, uploadRouter);
 
     // Middleware for all other routes
     app.use((req, res, next) => {
@@ -133,6 +140,7 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
 
     app.use(`/${config.api.version}/auth`, authRouter);
     app.use(`/${config.api.version}/iam`, iamRouter);
+    app.use(`/${config.api.version}/upload`, uploadRouter);
     app.use(`/${config.api.version}/ingestion-sources`, ingestionRouter);
     app.use(`/${config.api.version}/archived-emails`, archivedEmailRouter);
     app.use(`/${config.api.version}/storage`, storageRouter);

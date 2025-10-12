@@ -90,12 +90,14 @@ Here is a complete list of environment variables available for configuration:
 
 #### Application Settings
 
-| Variable         | Description                                                                                           | Default Value |
-| ---------------- | ----------------------------------------------------------------------------------------------------- | ------------- |
-| `NODE_ENV`       | The application environment.                                                                          | `development` |
-| `PORT_BACKEND`   | The port for the backend service.                                                                     | `4000`        |
-| `PORT_FRONTEND`  | The port for the frontend service.                                                                    | `3000`        |
-| `SYNC_FREQUENCY` | The frequency of continuous email syncing. See [cron syntax](https://crontab.guru/) for more details. | `* * * * *`   |
+| Variable         | Description                                                                                                                                                  | Default Value           |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `NODE_ENV`       | The application environment.                                                                                                                                 | `development`           |
+| `PORT_BACKEND`   | The port for the backend service.                                                                                                                            | `4000`                  |
+| `PORT_FRONTEND`  | The port for the frontend service.                                                                                                                           | `3000`                  |
+| `APP_URL`        | The public-facing URL of your application. This is used by the backend to configure CORS.                                                                    | `http://localhost:3000` |
+| `ORIGIN`         | Used by the SvelteKit Node adapter to determine the server's public-facing URL. It should always be set to the value of `APP_URL` (e.g., `ORIGIN=$APP_URL`). | `http://localhost:3000` |
+| `SYNC_FREQUENCY` | The frequency of continuous email syncing. See [cron syntax](https://crontab.guru/) for more details.                                                        | `* * * * *`             |
 
 #### Docker Compose Service Configuration
 
@@ -335,31 +337,3 @@ docker-compose up -d --force-recreate
 ```
 
 After this, any new data will be saved directly into the `./data/open-archiver` folder in your project directory.
-
-## Troubleshooting
-
-### 403 Cross-Site POST Forbidden Error
-
-If you are running the application behind a reverse proxy or have mapped the application to a different port (e.g., `3005:3000`), you may encounter a `403 Cross-site POST from submissions are forbidden` error when uploading files.
-
-To resolve this, you must set the `ORIGIN` environment variable to the URL of your application. This ensures that the backend can verify the origin of requests and prevent cross-site request forgery (CSRF) attacks.
-
-Add the following line to your `.env` file, replacing `<your_host>` and `<your_port>` with your specific values:
-
-```bash
-ORIGIN=http://<your_host>:<your_port>
-```
-
-For example, if your application is accessible at `http://localhost:3005`, you would set the variable as follows:
-
-```bash
-ORIGIN=http://localhost:3005
-```
-
-After adding the `ORIGIN` variable, restart your Docker containers for the changes to take effect:
-
-```bash
-docker-compose up -d --force-recreate
-```
-
-This will ensure that your file uploads are correctly authorized.

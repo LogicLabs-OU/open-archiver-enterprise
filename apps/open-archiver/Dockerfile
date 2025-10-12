@@ -24,7 +24,7 @@ COPY packages/frontend/svelte.config.js ./packages/frontend/
 # Install all dependencies.
 ENV PNPM_HOME="/pnpm"
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile --prod=false
+    pnpm install --shamefully-hoist --frozen-lockfile --prod=false
 
 # Copy the rest of the source code
 COPY . .
@@ -37,6 +37,8 @@ FROM base AS production
 
 # Copy built application from build stage
 COPY --from=build /app/packages/backend/dist ./packages/backend/dist
+COPY --from=build /app/packages/backend/drizzle.config.ts ./packages/backend/drizzle.config.ts
+COPY --from=build /app/packages/backend/src/database/migrations ./packages/backend/src/database/migrations
 COPY --from=build /app/packages/frontend/build ./packages/frontend/build
 COPY --from=build /app/packages/types/dist ./packages/types/dist
 COPY --from=build /app/apps/open-archiver/dist ./apps/open-archiver/dist
@@ -52,4 +54,4 @@ EXPOSE 3000
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 # Start the application
-CMD ["pnpm", "start:oss"]
+CMD ["pnpm", "docker-start:oss"]
