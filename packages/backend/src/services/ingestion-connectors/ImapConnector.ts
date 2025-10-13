@@ -154,12 +154,12 @@ export class ImapConnector implements IEmailConnector {
 			const mailboxes = await this.withRetry(async () => await this.client.list());
 
 			const processableMailboxes = mailboxes.filter((mailbox) => {
-				// filter out trash and all mail emails
+				// filter out junk/spam and all mail emails
 				if (mailbox.specialUse) {
 					const specialUse = mailbox.specialUse.toLowerCase();
 					if (
 						specialUse === '\\junk' ||
-						specialUse === '\\trash' ||
+						// specialUse === '\\trash' || // trash emails are usually user-deleted emails. Should be included in the archive.
 						specialUse === '\\all'
 					) {
 						return false;
@@ -168,7 +168,7 @@ export class ImapConnector implements IEmailConnector {
 				// Fallback to checking flags
 				if (
 					mailbox.flags.has('\\Noselect') ||
-					mailbox.flags.has('\\Trash') ||
+					// mailbox.flags.has('\\Trash') || // trash emails are usually user-deleted emails. Should be included in the archive.
 					mailbox.flags.has('\\Junk') ||
 					mailbox.flags.has('\\All')
 				) {
