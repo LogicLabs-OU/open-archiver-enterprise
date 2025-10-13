@@ -213,7 +213,7 @@ export class ArchivedEmailService {
 
 		// Load and handle attachments before deleting the email itself
 		if (email.hasAttachments) {
-			const emailAttachmentsResult = await db
+			const attachmentsForEmail = await db
 				.select({
 					attachmentId: attachments.id,
 					storagePath: attachments.storagePath,
@@ -223,37 +223,33 @@ export class ArchivedEmailService {
 				.where(eq(emailAttachments.emailId, emailId));
 
 			try {
-				for (const attachment of emailAttachmentsResult) {
-					const [refCount] = await db
-						.select({ count: count(emailAttachments.emailId) })
+				for (const attachment of attachmentsForEmail) {
+					// Delete the link between this email and the attachment record.
+					await db
+						.delete(emailAttachments)
+						.where(
+							and(
+								eq(emailAttachments.emailId, emailId),
+								eq(emailAttachments.attachmentId, attachment.attachmentId)
+							)
+						);
+
+					// Check if any other emails are linked to this attachment record.
+					const [recordRefCount] = await db
+						.select({ count: count() })
 						.from(emailAttachments)
 						.where(eq(emailAttachments.attachmentId, attachment.attachmentId));
 
-					if (refCount.count === 1) {
+					// If no other emails are linked to this record, it's safe to delete it and the file.
+					if (recordRefCount.count === 0) {
 						await storage.delete(attachment.storagePath);
-						await db
-							.delete(emailAttachments)
-							.where(
-								and(
-									eq(emailAttachments.emailId, emailId),
-									eq(emailAttachments.attachmentId, attachment.attachmentId)
-								)
-							);
 						await db
 							.delete(attachments)
 							.where(eq(attachments.id, attachment.attachmentId));
-					} else {
-						await db
-							.delete(emailAttachments)
-							.where(
-								and(
-									eq(emailAttachments.emailId, emailId),
-									eq(emailAttachments.attachmentId, attachment.attachmentId)
-								)
-							);
 					}
 				}
-			} catch {
+			} catch (error) {
+				console.error('Failed to delete email attachments', error);
 				throw new Error('Failed to delete email attachments');
 			}
 		}

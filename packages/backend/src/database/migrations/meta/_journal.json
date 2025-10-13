@@ -162,6 +162,13 @@
       "when": 1759701622932,
       "tag": "0022_complete_triton",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1760354094610,
+      "tag": "0023_swift_swordsman",
+      "breakpoints": true
     }
   ]
 }

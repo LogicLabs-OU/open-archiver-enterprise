@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, text, uuid, bigint, primaryKey, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, text, uuid, bigint, primaryKey, index } from 'drizzle-orm/pg-core';
 import { archivedEmails } from './archived-emails';
 import { ingestionSources } from './ingestion-sources';
 
@@ -17,7 +17,7 @@ export const attachments = pgTable(
 		}),
 	},
 	(table) => [
-		uniqueIndex('source_hash_unique').on(table.ingestionSourceId, table.contentHashSha256),
+		index('source_hash_idx').on(table.ingestionSourceId, table.contentHashSha256),
 	]
 );
 

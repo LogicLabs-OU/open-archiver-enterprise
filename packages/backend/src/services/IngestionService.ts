@@ -20,7 +20,7 @@ import {
 	attachments as attachmentsSchema,
 	emailAttachments,
 } from '../database/schema';
-import { createHash } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 import { logger } from '../config/logger';
 import { SearchService } from './SearchService';
 import { config } from '../config/index';
@@ -456,33 +456,63 @@ export class IngestionService {
 					const attachmentHash = createHash('sha256')
 						.update(attachmentBuffer)
 						.digest('hex');
-					const attachmentPath = `${config.storage.openArchiverFolderName}/${source.name.replaceAll(' ', '-')}-${source.id}/attachments/${attachment.filename}`;
-					await storage.put(attachmentPath, attachmentBuffer);
 
-					const [newAttachment] = await db
-						.insert(attachmentsSchema)
-						.values({
-							filename: attachment.filename,
-							mimeType: attachment.contentType,
-							sizeBytes: attachment.size,
-							contentHashSha256: attachmentHash,
-							storagePath: attachmentPath,
-							ingestionSourceId: source.id,
-						})
-						.onConflictDoUpdate({
-							target: [
-								attachmentsSchema.ingestionSourceId,
-								attachmentsSchema.contentHashSha256,
-							],
-							set: { filename: attachment.filename },
-						})
-						.returning();
+					// Check if an attachment with the same hash already exists for this source
+					const existingAttachment = await db.query.attachments.findFirst({
+						where: and(
+							eq(attachmentsSchema.contentHashSha256, attachmentHash),
+							eq(attachmentsSchema.ingestionSourceId, source.id)
+						),
+					});
 
+					let storagePath: string;
+
+					if (existingAttachment) {
+						// If it exists, reuse the storage path and don't save the file again
+						storagePath = existingAttachment.storagePath;
+						logger.info(
+							{
+								attachmentHash,
+								ingestionSourceId: source.id,
+								reusedPath: storagePath,
+							},
+							'Reusing existing attachment file for deduplication.'
+						);
+					} else {
+						// If it's a new attachment, create a unique path and save it
+						const uniqueId = randomUUID().slice(0, 7);
+						storagePath = `${config.storage.openArchiverFolderName}/${source.name.replaceAll(' ', '-')}-${source.id}/attachments/${uniqueId}-${attachment.filename}`;
+						await storage.put(storagePath, attachmentBuffer);
+					}
+
+					let attachmentRecord = existingAttachment;
+
+					if (!attachmentRecord) {
+						// If it's a new attachment, create a unique path and save it
+						const uniqueId = randomUUID().slice(0, 5);
+						const storagePath = `${config.storage.openArchiverFolderName}/${source.name.replaceAll(' ', '-')}-${source.id}/attachments/${uniqueId}-${attachment.filename}`;
+						await storage.put(storagePath, attachmentBuffer);
+
+						// Insert a new attachment record
+						[attachmentRecord] = await db
+							.insert(attachmentsSchema)
+							.values({
+								filename: attachment.filename,
+								mimeType: attachment.contentType,
+								sizeBytes: attachment.size,
+								contentHashSha256: attachmentHash,
+								storagePath: storagePath,
+								ingestionSourceId: source.id,
+							})
+							.returning();
+					}
+
+					// Link the attachment record (either new or existing) to the email
 					await db
 						.insert(emailAttachments)
 						.values({
 							emailId: archivedEmail.id,
-							attachmentId: newAttachment.id,
+							attachmentId: attachmentRecord.id,
 						})
 						.onConflictDoNothing();
 				}
