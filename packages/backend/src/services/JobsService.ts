@@ -101,7 +101,7 @@ export class JobsService {
             stacktrace: job.stacktrace,
             returnValue: job.returnvalue,
             ingestionSourceId: job.data.ingestionSourceId,
-            error: state === 'failed' ? job.failedReason : undefined,
+            error: state === 'failed' ? job.stacktrace : undefined,
         };
     }
 }

@@ -90,14 +90,15 @@ Here is a complete list of environment variables available for configuration:
 
 #### Application Settings
 
-| Variable         | Description                                                                                                                                                  | Default Value           |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
-| `NODE_ENV`       | The application environment.                                                                                                                                 | `development`           |
-| `PORT_BACKEND`   | The port for the backend service.                                                                                                                            | `4000`                  |
-| `PORT_FRONTEND`  | The port for the frontend service.                                                                                                                           | `3000`                  |
-| `APP_URL`        | The public-facing URL of your application. This is used by the backend to configure CORS.                                                                    | `http://localhost:3000` |
-| `ORIGIN`         | Used by the SvelteKit Node adapter to determine the server's public-facing URL. It should always be set to the value of `APP_URL` (e.g., `ORIGIN=$APP_URL`). | `http://localhost:3000` |
-| `SYNC_FREQUENCY` | The frequency of continuous email syncing. See [cron syntax](https://crontab.guru/) for more details.                                                        | `* * * * *`             |
+| Variable                | Description                                                                                                                                                  | Default Value           |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `NODE_ENV`              | The application environment.                                                                                                                                 | `development`           |
+| `PORT_BACKEND`          | The port for the backend service.                                                                                                                            | `4000`                  |
+| `PORT_FRONTEND`         | The port for the frontend service.                                                                                                                           | `3000`                  |
+| `APP_URL`               | The public-facing URL of your application. This is used by the backend to configure CORS.                                                                    | `http://localhost:3000` |
+| `ORIGIN`                | Used by the SvelteKit Node adapter to determine the server's public-facing URL. It should always be set to the value of `APP_URL` (e.g., `ORIGIN=$APP_URL`). | `http://localhost:3000` |
+| `SYNC_FREQUENCY`        | The frequency of continuous email syncing. See [cron syntax](https://crontab.guru/) for more details.                                                        | `* * * * *`             |
+| `ALL_INCLUSIVE_ARCHIVE` | Set to `true` to include all emails, including Junk and Trash folders, in the email archive.                                                                 | `false`                 |
 
 #### Docker Compose Service Configuration
 
