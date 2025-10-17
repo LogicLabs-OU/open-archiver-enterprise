@@ -281,10 +281,34 @@
 			"prev": "Zurück",
 			"next": "Weiter",
 			"verification_successful_title": "Überprüfung erfolgreich",
-			"verification_successful_message": "Die Integrität des Audit-Protokolls wurde erfolgreich überprüft.",
+			"verification_successful_message": "Integrität des Audit-Protokolls erfolgreich überprüft.",
 			"verification_failed_title": "Überprüfung fehlgeschlagen",
 			"verification_failed_message": "Die Integritätsprüfung des Audit-Protokolls ist fehlgeschlagen. Bitte überprüfen Sie die Systemprotokolle für weitere Details.",
 			"verification_error_message": "Während der Überprüfung ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut."
+		},
+		"jobs": {
+			"title": "Job-Warteschlangen",
+			"queues": "Job-Warteschlangen",
+			"active": "Aktiv",
+			"completed": "Abgeschlossen",
+			"failed": "Fehlgeschlagen",
+			"delayed": "Verzögert",
+			"waiting": "Wartend",
+			"paused": "Pausiert",
+			"back_to_queues": "Zurück zu den Warteschlangen",
+			"queue_overview": "Warteschlangenübersicht",
+			"jobs": "Jobs",
+			"id": "ID",
+			"name": "Name",
+			"state": "Status",
+			"created_at": "Erstellt am",
+			"processed_at": "Verarbeitet am",
+			"finished_at": "Beendet am",
+			"showing": "Anzeige",
+			"of": "von",
+			"previous": "Zurück",
+			"next": "Weiter",
+			"ingestion_source": "Ingestion-Quelle"
 		}
 	}
 }

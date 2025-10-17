@@ -95,6 +95,7 @@ export default defineConfig({
 					{ text: 'Integrity Check', link: '/api/integrity' },
 					{ text: 'Search', link: '/api/search' },
 					{ text: 'Storage', link: '/api/storage' },
+					{ text: 'Jobs', link: '/api/jobs' },
 				],
 			},
 			{

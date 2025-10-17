@@ -28,11 +28,11 @@
 		},
 		{ href: '/dashboard/search', label: $t('app.layout.search'), position: 3 },
 		{
-			label: $t('app.layout.settings'),
+			label: $t('app.layout.admin'),
 			subMenu: [
 				{
-					href: '/dashboard/settings/system',
-					label: $t('app.layout.system'),
+					href: '/dashboard/admin/jobs',
+					label: $t('app.jobs.jobs'),
 				},
 				{
 					href: '/dashboard/settings/users',
@@ -42,12 +42,22 @@
 					href: '/dashboard/settings/roles',
 					label: $t('app.layout.roles'),
 				},
+			],
+			position: 5,
+		},
+		{
+			label: $t('app.layout.settings'),
+			subMenu: [
+				{
+					href: '/dashboard/settings/system',
+					label: $t('app.layout.system'),
+				},
 				{
 					href: '/dashboard/settings/api-keys',
 					label: $t('app.layout.api_keys'),
 				},
 			],
-			position: 5,
+			position: 6,
 		},
 	];
 

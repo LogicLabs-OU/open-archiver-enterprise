@@ -19,6 +19,7 @@ import { createUserRouter } from './routes/user.routes';
 import { createSettingsRouter } from './routes/settings.routes';
 import { apiKeyRoutes } from './routes/api-key.routes';
 import { integrityRoutes } from './routes/integrity.routes';
+import { createJobsRouter } from './routes/jobs.routes';
 import { AuthService } from '../services/AuthService';
 import { AuditService } from '../services/AuditService';
 import { UserService } from '../services/UserService';
@@ -120,6 +121,7 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
     const settingsRouter = createSettingsRouter(authService);
     const apiKeyRouter = apiKeyRoutes(authService);
     const integrityRouter = integrityRoutes(authService);
+    const jobsRouter = createJobsRouter(authService);
 
     // Middleware for all other routes
     app.use((req, res, next) => {
@@ -147,19 +149,18 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
     app.use(`/${config.api.version}/search`, searchRouter);
     app.use(`/${config.api.version}/dashboard`, dashboardRouter);
     app.use(`/${config.api.version}/users`, userRouter);
+    app.use(`/${config.api.version}/settings`, settingsRouter);
+    app.use(`/${config.api.version}/api-keys`, apiKeyRouter);
+    app.use(`/${config.api.version}/integrity`, integrityRouter);
+    app.use(`/${config.api.version}/jobs`, jobsRouter);
+
     // Load all provided extension modules
     for (const module of modules) {
         await module.initialize(app, authService);
         console.log(`🏢 Enterprise module loaded: ${module.name}`);
     }
-
-    app.use(`/${config.api.version}/settings`, settingsRouter);
-    app.use(`/${config.api.version}/api-keys`, apiKeyRouter);
-    app.use(`/${config.api.version}/integrity`, integrityRouter);
-
-
     app.get('/', (req, res) => {
-        res.send('Backend is running!');
+        res.send('Backend is running!!');
     });
 
     console.log('✅ Core OSS modules loaded.');

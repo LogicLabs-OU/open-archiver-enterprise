@@ -83,6 +83,12 @@ importers:
       '@azure/msal-node':
         specifier: ^3.6.3
         version: 3.6.3
+      '@bull-board/api':
+        specifier: ^6.13.0
+        version: 6.13.0(@bull-board/ui@6.13.0)
+      '@bull-board/express':
+        specifier: ^6.13.0
+        version: 6.13.0
       '@casl/ability':
         specifier: ^6.7.3
         version: 6.7.3
@@ -201,12 +207,6 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
     devDependencies:
-      '@bull-board/api':
-        specifier: ^6.11.0
-        version: 6.11.0(@bull-board/ui@6.11.0)
-      '@bull-board/express':
-        specifier: ^6.11.0
-        version: 6.11.0
       '@types/archiver':
         specifier: ^6.0.3
         version: 6.0.3
@@ -652,16 +652,16 @@ packages:
     resolution: {integrity: sha512-ruv7Ae4J5dUYULmeXw1gmb7rYRz57OWCPM57pHojnLq/3Z1CK2lNSLTCVjxVk1F/TZHwOZZrOWi0ur95BbLxNQ==}
     engines: {node: '>=6.9.0'}
 
-  '@bull-board/api@6.11.0':
-    resolution: {integrity: sha512-HLbIuXIthrgeVRmN7Vec9/7ZKWx8i1xTC6Nzi//l7ua+Xu5wn6f/aZllUNVzty5ilLTHqWFkfVOwpuN91o7yxA==}
+  '@bull-board/api@6.13.0':
+    resolution: {integrity: sha512-GZ0On0VeL5uZVS1x7UdU90F9GV1kdmHa1955hW3Ow1PmslCY/2YwmvnapVdbvCUSVBqluTfbVZsE9X3h79r1kw==}
     peerDependencies:
-      '@bull-board/ui': 6.11.0
+      '@bull-board/ui': 6.13.0
 
-  '@bull-board/express@6.11.0':
-    resolution: {integrity: sha512-dYejXl867e3tQElKwUstxzKpkTEJYWy9Cgbw0scYx+MyTvQS7A+gCBVdhdEMGqk3LdUDAzDtvA9cQnCHLC+2Sw==}
+  '@bull-board/express@6.13.0':
+    resolution: {integrity: sha512-PAbzD3dplV2NtN8ETs00bp++pBOD+cVb1BEYltXrjyViA2WluDBVKdlh/2wM+sHbYO2TAMNg8bUtKxGNCmxG7w==}
 
-  '@bull-board/ui@6.11.0':
-    resolution: {integrity: sha512-NB2mYr8l850BOLzytUyeYl8T3M9ZgPDDfT9WTOCVCDPr77kFF7iEM5jSE9AZg86bmZyWAgO/ogOUJaPSCNHY7g==}
+  '@bull-board/ui@6.13.0':
+    resolution: {integrity: sha512-63I6b3nZnKWI5ok6mw/Tk2rIObuzMTY/tLGyO51p0GW4rAImdXxrK6mT7j4SgEuP2B+tt/8L1jU7sLu8MMcCNw==}
 
   '@casl/ability@6.7.3':
     resolution: {integrity: sha512-A4L28Ko+phJAsTDhRjzCOZWECQWN2jzZnJPnROWWHjJpyMq1h7h9ZqjwS2WbIUa3Z474X1ZPSgW0f1PboZGC0A==}
@@ -5367,23 +5367,23 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@bull-board/api@6.11.0(@bull-board/ui@6.11.0)':
+  '@bull-board/api@6.13.0(@bull-board/ui@6.13.0)':
     dependencies:
-      '@bull-board/ui': 6.11.0
+      '@bull-board/ui': 6.13.0
       redis-info: 3.1.0
 
-  '@bull-board/express@6.11.0':
+  '@bull-board/express@6.13.0':
     dependencies:
-      '@bull-board/api': 6.11.0(@bull-board/ui@6.11.0)
-      '@bull-board/ui': 6.11.0
+      '@bull-board/api': 6.13.0(@bull-board/ui@6.13.0)
+      '@bull-board/ui': 6.13.0
       ejs: 3.1.10
       express: 5.1.0
     transitivePeerDependencies:
       - supports-color
 
-  '@bull-board/ui@6.11.0':
+  '@bull-board/ui@6.13.0':
     dependencies:
-      '@bull-board/api': 6.11.0(@bull-board/ui@6.11.0)
+      '@bull-board/api': 6.13.0(@bull-board/ui@6.13.0)
 
   '@casl/ability@6.7.3':
     dependencies:

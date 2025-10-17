@@ -234,7 +234,8 @@
 			"users": "Users",
 			"roles": "Roles",
 			"api_keys": "API Keys",
-			"logout": "Logout"
+			"logout": "Logout",
+			"admin": "Admin"
 		},
 		"api_keys_page": {
 			"title": "API Keys",
@@ -323,6 +324,31 @@
 			"verification_failed_title": "Verification Failed",
 			"verification_failed_message": "The audit log integrity check failed. Please review the system logs for more details.",
 			"verification_error_message": "An unexpected error occurred during verification. Please try again."
+		},
+		"jobs": {
+			"title": "Job Queues",
+			"queues": "Job Queues",
+			"active": "Active",
+			"completed": "Completed",
+			"failed": "Failed",
+			"delayed": "Delayed",
+			"waiting": "Waiting",
+			"paused": "Paused",
+			"back_to_queues": "Back to Queues",
+			"queue_overview": "Queue Overview",
+			"jobs": "Jobs",
+			"id": "ID",
+			"name": "Name",
+			"state": "State",
+
+			"created_at": "Created At",
+			"processed_at": "Processed At",
+			"finished_at": "Finished At",
+			"showing": "Showing",
+			"of": "of",
+			"previous": "Previous",
+			"next": "Next",
+			"ingestion_source": "Ingestion Source"
 		}
 	}
 }
