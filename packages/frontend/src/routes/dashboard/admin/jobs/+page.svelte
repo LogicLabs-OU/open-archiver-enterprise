@@ -18,7 +18,7 @@
 	<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 		{#each queues as queue}
 			<a href={`/dashboard/admin/jobs/${queue.name}`} class="block">
-				<Card.Root class="hover:border-primary">
+				<Card.Root class=" hover:shadow-md">
 					<Card.Header>
 						<Card.Title class="capitalize">{queue.name.split('_').join(' ')}</Card.Title
 						>

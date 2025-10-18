@@ -2,11 +2,15 @@
 	import type { PageData } from './$types';
 	import * as Card from '$lib/components/ui/card';
 	import { t } from '$lib/translations';
-	import { Badge } from '$lib/components/ui/badge';
 	import * as Table from '$lib/components/ui/table';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { Button } from '$lib/components/ui/button';
 	import { goto } from '$app/navigation';
 	import type { JobStatus } from '@open-archiver/types';
+	import * as Pagination from '$lib/components/ui/pagination/index.js';
+	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import ChevronRight from 'lucide-svelte/icons/chevron-right';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	let { data }: { data: PageData } = $props();
 	let queue = $derived(data.queue);
@@ -22,17 +26,21 @@
 
 	let selectedStatus: JobStatus | undefined = $state('failed');
 
+	onMount(() => {
+		if (browser) {
+			const url = new URL(window.location.href);
+			const status = url.searchParams.get('status') as JobStatus;
+			if (status) {
+				selectedStatus = status;
+			}
+		}
+	});
+
 	function handleStatusChange(status: JobStatus) {
 		selectedStatus = status;
 		const url = new URL(window.location.href);
 		url.searchParams.set('status', status);
 		url.searchParams.set('page', '1');
-		goto(url.toString(), { invalidateAll: true });
-	}
-
-	function handlePageChange(page: number) {
-		const url = new URL(window.location.href);
-		url.searchParams.set('page', page.toString());
 		goto(url.toString(), { invalidateAll: true });
 	}
 </script>
@@ -132,32 +140,72 @@
 				</Table.Body>
 			</Table.Root>
 		</Card.Content>
-		<Card.Footer class="flex justify-between">
-			<div>
-				<p class="text-muted-foreground text-sm">
-					{$t('app.jobs.showing')}
-					{queue.jobs.length}
-					{$t('app.jobs.of')}
-					{queue.pagination.totalJobs}
-					{$t('app.jobs.jobs')}
-				</p>
+		<Card.Footer class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+			<div class="text-muted-foreground text-nowrap text-sm">
+				{$t('app.jobs.showing')}
+				{queue.jobs.length}
+				{$t('app.jobs.of')}
+				{queue.pagination.totalJobs}
+				{$t('app.jobs.jobs')}
 			</div>
-			<div class="flex space-x-2">
-				<Button
-					variant="outline"
-					disabled={queue.pagination.currentPage <= 1}
-					onclick={() => handlePageChange(queue.pagination.currentPage - 1)}
+			{#if queue.pagination.totalJobs > queue.pagination.limit}
+				<Pagination.Root
+					count={queue.pagination.totalJobs}
+					perPage={queue.pagination.limit}
+					page={queue.pagination.currentPage}
 				>
-					{$t('app.jobs.previous')}
-				</Button>
-				<Button
-					variant="outline"
-					disabled={queue.pagination.currentPage >= queue.pagination.totalPages}
-					onclick={() => handlePageChange(queue.pagination.currentPage + 1)}
-				>
-					{$t('app.jobs.next')}
-				</Button>
-			</div>
+					{#snippet children({ pages, currentPage })}
+						<Pagination.Content>
+							<Pagination.Item>
+								<a
+									href={`/dashboard/admin/jobs/${queue.name}?status=${selectedStatus}&page=${
+										currentPage - 1
+									}`}
+								>
+									<Pagination.PrevButton>
+										<ChevronLeft class="h-4 w-4" />
+										<span class="hidden sm:block"
+											>{$t('app.jobs.previous')}</span
+										>
+									</Pagination.PrevButton>
+								</a>
+							</Pagination.Item>
+							{#each pages as page (page.key)}
+								{#if page.type === 'ellipsis'}
+									<Pagination.Item>
+										<Pagination.Ellipsis />
+									</Pagination.Item>
+								{:else}
+									<Pagination.Item>
+										<a
+											href={`/dashboard/admin/jobs/${queue.name}?status=${selectedStatus}&page=${page.value}`}
+										>
+											<Pagination.Link
+												{page}
+												isActive={currentPage === page.value}
+											>
+												{page.value}
+											</Pagination.Link>
+										</a>
+									</Pagination.Item>
+								{/if}
+							{/each}
+							<Pagination.Item>
+								<a
+									href={`/dashboard/admin/jobs/${queue.name}?status=${selectedStatus}&page=${
+										currentPage + 1
+									}`}
+								>
+									<Pagination.NextButton>
+										<span class="hidden sm:block">{$t('app.jobs.next')}</span>
+										<ChevronRight class="h-4 w-4" />
+									</Pagination.NextButton>
+								</a>
+							</Pagination.Item>
+						</Pagination.Content>
+					{/snippet}
+				</Pagination.Root>
+			{/if}
 		</Card.Footer>
 	</Card.Root>
 </div>

@@ -14,57 +14,14 @@
 	import type { AuditLogAction, AuditLogEntry } from '@open-archiver/types';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Label } from '$lib/components/ui/label';
+	import * as Pagination from '$lib/components/ui/pagination/index.js';
+	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import ChevronRight from 'lucide-svelte/icons/chevron-right';
 
 	let { data }: { data: PageData } = $props();
 
 	let logs = $derived(data.logs);
 	let meta = $derived(data.meta);
-
-	const getPaginationItems = (currentPage: number, totalPages: number, siblingCount = 1) => {
-		const totalPageNumbers = siblingCount + 5;
-
-		if (totalPages <= totalPageNumbers) {
-			return Array.from({ length: totalPages }, (_, i) => i + 1);
-		}
-
-		const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-		const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
-
-		const shouldShowLeftDots = leftSiblingIndex > 2;
-		const shouldShowRightDots = rightSiblingIndex < totalPages - 2;
-
-		const firstPageIndex = 1;
-		const lastPageIndex = totalPages;
-
-		if (!shouldShowLeftDots && shouldShowRightDots) {
-			let leftItemCount = 3 + 2 * siblingCount;
-			let leftRange = Array.from({ length: leftItemCount }, (_, i) => i + 1);
-			return [...leftRange, '...', totalPages];
-		}
-
-		if (shouldShowLeftDots && !shouldShowRightDots) {
-			let rightItemCount = 3 + 2 * siblingCount;
-			let rightRange = Array.from(
-				{ length: rightItemCount },
-				(_, i) => totalPages - rightItemCount + i + 1
-			);
-			return [firstPageIndex, '...', ...rightRange];
-		}
-
-		if (shouldShowLeftDots && shouldShowRightDots) {
-			let middleRange = Array.from(
-				{ length: rightSiblingIndex - leftSiblingIndex + 1 },
-				(_, i) => leftSiblingIndex + i
-			);
-			return [firstPageIndex, '...', ...middleRange, '...', lastPageIndex];
-		}
-
-		return [];
-	};
-
-	let paginationItems = $derived(
-		getPaginationItems(meta.page, Math.ceil(meta.total / meta.limit))
-	);
 
 	let isDetailViewOpen = $state(false);
 	let selectedLog = $state<AuditLogEntry | null>(null);
@@ -228,32 +185,54 @@
 </div>
 
 {#if meta.total > meta.limit}
-	<div class="mt-8 flex flex-row items-center justify-center space-x-2">
-		<a
-			href={`/dashboard/compliance/audit-log?page=${meta.page - 1}&limit=${meta.limit}`}
-			class={meta.page === 1 ? 'pointer-events-none' : ''}
-		>
-			<Button variant="outline" disabled={meta.page === 1}>{$t('app.audit_log.prev')}</Button>
-		</a>
-
-		{#each paginationItems as item}
-			{#if typeof item === 'number'}
-				<a href={`/dashboard/compliance/audit-log?page=${item}&limit=${meta.limit}`}>
-					<Button variant={item === meta.page ? 'default' : 'outline'}>{item}</Button>
-				</a>
-			{:else}
-				<span class="px-4 py-2">...</span>
-			{/if}
-		{/each}
-
-		<a
-			href={`/dashboard/compliance/audit-log?page=${meta.page + 1}&limit=${meta.limit}`}
-			class={meta.page === Math.ceil(meta.total / meta.limit) ? 'pointer-events-none' : ''}
-		>
-			<Button variant="outline" disabled={meta.page === Math.ceil(meta.total / meta.limit)}
-				>{$t('app.audit_log.next')}</Button
-			>
-		</a>
+	<div class="mt-8">
+		<Pagination.Root count={meta.total} perPage={meta.limit} page={meta.page}>
+			{#snippet children({ pages, currentPage })}
+				<Pagination.Content>
+					<Pagination.Item>
+						<a
+							href={`/dashboard/compliance/audit-log?page=${
+								currentPage - 1
+							}&limit=${meta.limit}`}
+						>
+							<Pagination.PrevButton>
+								<ChevronLeft class="h-4 w-4" />
+								<span class="hidden sm:block">{$t('app.audit_log.prev')}</span>
+							</Pagination.PrevButton>
+						</a>
+					</Pagination.Item>
+					{#each pages as page (page.key)}
+						{#if page.type === 'ellipsis'}
+							<Pagination.Item>
+								<Pagination.Ellipsis />
+							</Pagination.Item>
+						{:else}
+							<Pagination.Item>
+								<a
+									href={`/dashboard/compliance/audit-log?page=${page.value}&limit=${meta.limit}`}
+								>
+									<Pagination.Link {page} isActive={currentPage === page.value}>
+										{page.value}
+									</Pagination.Link>
+								</a>
+							</Pagination.Item>
+						{/if}
+					{/each}
+					<Pagination.Item>
+						<a
+							href={`/dashboard/compliance/audit-log?page=${
+								currentPage + 1
+							}&limit=${meta.limit}`}
+						>
+							<Pagination.NextButton>
+								<span class="hidden sm:block">{$t('app.audit_log.next')}</span>
+								<ChevronRight class="h-4 w-4" />
+							</Pagination.NextButton>
+						</a>
+					</Pagination.Item>
+				</Pagination.Content>
+			{/snippet}
+		</Pagination.Root>
 	</div>
 {/if}
 
