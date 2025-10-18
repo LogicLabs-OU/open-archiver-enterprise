@@ -1,0 +1,7 @@
+Source code in this repository is variously licensed under the GNU Affero General Public License (AGPL), or the Business Source License.
+
+- Outside of the top-level "packages/enterprise" and "apps/open-archiver-enterprise" directories, source code in a given file is licensed under the AGPL. The full text of this license can be found in the file LICENSE-AGPL.txt.
+
+- Within the top-level "packages/enterprise" and "apps/open-archiver-enterprise" directories, source code in a given file is licensed under the Business Source License, unless otherwise noted. The full text of this license can be found in the file LICENSE-BSL.txt.
+
+When built, binary files are generated for the AGPL source code and the Business Source License source code. Binaries located at https://hub.docker.com/r/logiclabshq/open-archiver with an "-enterprise" tag are released under the Business Source License. All other binaries are released under the AGPL.
