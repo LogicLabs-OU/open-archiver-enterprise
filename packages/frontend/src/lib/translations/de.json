@@ -309,6 +309,34 @@
 			"previous": "Zurück",
 			"next": "Weiter",
 			"ingestion_source": "Ingestion-Quelle"
+		},
+		"license_page": {
+			"title": "Enterprise-Lizenzstatus",
+			"meta_description": "Zeigen Sie den aktuellen Status Ihrer Open Archiver Enterprise-Lizenz an.",
+			"revoked_title": "Lizenz widerrufen",
+			"revoked_message": "Ihre Lizenz wurde vom Lizenzadministrator widerrufen. Enterprise-Funktionen werden deaktiviert {{grace_period}}. Bitte kontaktieren Sie Ihren Account Manager für Unterstützung.",
+			"revoked_grace_period": "am {{date}}",
+			"revoked_immediately": "sofort",
+			"seat_limit_exceeded_title": "Sitzplatzlimit überschritten",
+			"seat_limit_exceeded_message": "Ihre Lizenz gilt für {{planSeats}} Benutzer, aber Sie verwenden derzeit {{activeSeats}}. Bitte kontaktieren Sie den Vertrieb, um Ihr Abonnement anzupassen.",
+			"customer": "Kunde",
+			"license_details": "Lizenzdetails",
+			"license_status": "Lizenzstatus",
+			"active": "Aktiv",
+			"expired": "Abgelaufen",
+			"revoked": "Widerrufen",
+			"unknown": "Unbekannt",
+			"expires": "Läuft ab",
+			"seat_usage": "Sitzplatznutzung",
+			"seats_used": "{{activeSeats}} von {{planSeats}} Plätzen belegt",
+			"enabled_features": "Aktivierte Funktionen",
+			"enabled_features_description": "Die folgenden Enterprise-Funktionen sind derzeit aktiviert.",
+			"feature": "Funktion",
+			"status": "Status",
+			"enabled": "Aktiviert",
+			"disabled": "Deaktiviert",
+			"could_not_load_title": "Lizenz konnte nicht geladen werden",
+			"could_not_load_message": "Ein unerwarteter Fehler ist aufgetreten."
 		}
 	}
 }

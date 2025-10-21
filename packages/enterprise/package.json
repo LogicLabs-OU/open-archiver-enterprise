@@ -12,8 +12,10 @@
 	},
 	"dependencies": {
 		"@open-archiver/backend": "workspace:*",
+		"@types/node-cron": "^3.0.11",
 		"express": "^5.1.0",
 		"jsonwebtoken": "^9.0.2",
+		"node-cron": "^4.2.1",
 		"zod": "^4.1.5"
 	},
 	"devDependencies": {

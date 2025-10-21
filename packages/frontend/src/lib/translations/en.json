@@ -349,6 +349,34 @@
 			"previous": "Previous",
 			"next": "Next",
 			"ingestion_source": "Ingestion Source"
+		},
+		"license_page": {
+			"title": "Enterprise License Status",
+			"meta_description": "View the current status of your Open Archiver Enterprise license.",
+			"revoked_title": "License Revoked",
+			"revoked_message": "Your license has been revoked by the license administrator. Enterprise features will be disabled {{grace_period}}. Please contact your account manager for assistance.",
+			"revoked_grace_period": "on {{date}}",
+			"revoked_immediately": "immediately",
+			"seat_limit_exceeded_title": "Seat Limit Exceeded",
+			"seat_limit_exceeded_message": "Your license is for {{planSeats}} users, but you are currently using {{activeSeats}}. Please contact sales to adjust your subscription.",
+			"customer": "Customer",
+			"license_details": "License Details",
+			"license_status": "License Status",
+			"active": "Active",
+			"expired": "Expired",
+			"revoked": "Revoked",
+			"unknown": "Unknown",
+			"expires": "Expires",
+			"seat_usage": "Seat Usage",
+			"seats_used": "{{activeSeats}} of {{planSeats}} seats used",
+			"enabled_features": "Enabled Features",
+			"enabled_features_description": "The following enterprise features are currently enabled.",
+			"feature": "Feature",
+			"status": "Status",
+			"enabled": "Enabled",
+			"disabled": "Disabled",
+			"could_not_load_title": "Could Not Load License",
+			"could_not_load_message": "An unexpected error occurred."
 		}
 	}
 }

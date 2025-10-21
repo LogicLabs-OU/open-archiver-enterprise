@@ -75,6 +75,11 @@
 			subMenu: [{ href: '/dashboard/compliance/audit-log', label: 'Audit Log' }],
 			position: 3,
 		},
+		{
+			label: $t('app.layout.admin'),
+			subMenu: [{ href: '/dashboard/admin/license', label: 'License status' }],
+			position: 4,
+		},
 	];
 
 	function mergeNavItems(baseItems: NavItem[], enterpriseItems: NavItem[]): NavItem[] {

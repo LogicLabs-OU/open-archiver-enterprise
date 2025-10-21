@@ -131,8 +131,9 @@
 						</Table.Row>
 						{#if job.error}
 							<Table.Row id={`error-${job.id}`} class="hidden">
-								<Table.Cell colspan={7}>
-									<pre class="rounded-md bg-gray-100 p-4">{job.error}</pre>
+								<Table.Cell colspan={7} class="p-0">
+									<pre
+										class="max-w-full text-wrap rounded-md bg-gray-100 p-4 text-xs">{job.error}</pre>
 								</Table.Cell>
 							</Table.Row>
 						{/if}

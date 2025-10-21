@@ -3,7 +3,6 @@
 	import * as Table from '$lib/components/ui/table';
 	import { Button } from '$lib/components/ui/button';
 	import { t } from '$lib/translations';
-	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { ArrowUpDown } from 'lucide-svelte';
 	import { page } from '$app/stores';
