@@ -4,7 +4,6 @@ import * as schema from '../../database/schema';
 import { sql } from 'drizzle-orm';
 import { db } from '../../database';
 
-
 const userService = new UserService();
 
 export const getUsers = async (req: Request, res: Response) => {

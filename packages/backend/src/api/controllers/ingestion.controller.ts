@@ -24,7 +24,6 @@ export class IngestionController {
 	}
 
 	public create = async (req: Request, res: Response): Promise<Response> => {
-
 		try {
 			const dto: CreateIngestionSourceDto = req.body;
 			const userId = req.user?.sub;
@@ -35,7 +34,12 @@ export class IngestionController {
 			if (!actor) {
 				return res.status(401).json({ message: req.t('errors.unauthorized') });
 			}
-			const newSource = await IngestionService.create(dto, userId, actor, req.ip || 'unknown');
+			const newSource = await IngestionService.create(
+				dto,
+				userId,
+				actor,
+				req.ip || 'unknown'
+			);
 			const safeSource = this.toSafeIngestionSource(newSource);
 			return res.status(201).json(safeSource);
 		} catch (error: any) {
@@ -78,7 +82,6 @@ export class IngestionController {
 	};
 
 	public update = async (req: Request, res: Response): Promise<Response> => {
-
 		try {
 			const { id } = req.params;
 			const dto: UpdateIngestionSourceDto = req.body;
@@ -90,7 +93,12 @@ export class IngestionController {
 			if (!actor) {
 				return res.status(401).json({ message: req.t('errors.unauthorized') });
 			}
-			const updatedSource = await IngestionService.update(id, dto, actor, req.ip || 'unknown');
+			const updatedSource = await IngestionService.update(
+				id,
+				dto,
+				actor,
+				req.ip || 'unknown'
+			);
 			const safeSource = this.toSafeIngestionSource(updatedSource);
 			return res.status(200).json(safeSource);
 		} catch (error) {
@@ -103,7 +111,6 @@ export class IngestionController {
 	};
 
 	public delete = async (req: Request, res: Response): Promise<Response> => {
-
 		try {
 			checkDeletionEnabled();
 			const { id } = req.params;
@@ -129,7 +136,6 @@ export class IngestionController {
 	};
 
 	public triggerInitialImport = async (req: Request, res: Response): Promise<Response> => {
-
 		try {
 			const { id } = req.params;
 			await IngestionService.triggerInitialImport(id);
@@ -144,7 +150,6 @@ export class IngestionController {
 	};
 
 	public pause = async (req: Request, res: Response): Promise<Response> => {
-
 		try {
 			const { id } = req.params;
 			const userId = req.user?.sub;
@@ -173,7 +178,6 @@ export class IngestionController {
 	};
 
 	public triggerForceSync = async (req: Request, res: Response): Promise<Response> => {
-
 		try {
 			const { id } = req.params;
 			const userId = req.user?.sub;

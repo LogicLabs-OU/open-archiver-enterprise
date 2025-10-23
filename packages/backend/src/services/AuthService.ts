@@ -41,11 +41,7 @@ export class AuthService {
 			.sign(this.#jwtSecret);
 	}
 
-	public async login(
-		email: string,
-		password: string,
-		ip: string
-	): Promise<LoginResponse | null> {
+	public async login(email: string, password: string, ip: string): Promise<LoginResponse | null> {
 		const user = await this.#userService.findByEmail(email);
 
 		if (!user || !user.password) {

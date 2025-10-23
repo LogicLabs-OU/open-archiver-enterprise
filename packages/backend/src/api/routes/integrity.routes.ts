@@ -5,12 +5,12 @@ import { requirePermission } from '../middleware/requirePermission';
 import { AuthService } from '../../services/AuthService';
 
 export const integrityRoutes = (authService: AuthService): Router => {
-    const router = Router();
-    const controller = new IntegrityController();
+	const router = Router();
+	const controller = new IntegrityController();
 
-    router.use(requireAuth(authService));
+	router.use(requireAuth(authService));
 
-    router.get('/:id', requirePermission('read', 'archive'), controller.checkIntegrity);
+	router.get('/:id', requirePermission('read', 'archive'), controller.checkIntegrity);
 
-    return router;
+	return router;
 };

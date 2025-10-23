@@ -4,7 +4,7 @@ import { auditLogModule } from './modules/audit-log/audit-log.module';
 import { licenseModule } from './modules/license/license.module';
 
 export const enterpriseModules: ArchiverModule[] = [
-    licenseModule,
-    retentionPolicyModule,
-    auditLogModule
+	licenseModule,
+	retentionPolicyModule,
+	auditLogModule,
 ];

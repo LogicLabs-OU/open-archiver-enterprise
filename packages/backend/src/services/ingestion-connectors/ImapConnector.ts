@@ -8,7 +8,7 @@ import type {
 import type { IEmailConnector } from '../EmailProviderFactory';
 import { ImapFlow } from 'imapflow';
 import { simpleParser, ParsedMail, Attachment, AddressObject, Headers } from 'mailparser';
-import { config } from '../../config'
+import { config } from '../../config';
 import { logger } from '../../config/logger';
 import { getThreadId } from './helpers/utils';
 
@@ -161,18 +161,12 @@ export class ImapConnector implements IEmailConnector {
 				// filter out junk/spam mail emails
 				if (mailbox.specialUse) {
 					const specialUse = mailbox.specialUse.toLowerCase();
-					if (
-						specialUse === '\\junk' ||
-						specialUse === '\\trash'
-					) {
+					if (specialUse === '\\junk' || specialUse === '\\trash') {
 						return false;
 					}
 				}
 				// Fallback to checking flags
-				if (
-					mailbox.flags.has('\\Trash') ||
-					mailbox.flags.has('\\Junk')
-				) {
+				if (mailbox.flags.has('\\Trash') || mailbox.flags.has('\\Junk')) {
 					return false;
 				}
 

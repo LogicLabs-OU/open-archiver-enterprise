@@ -15,7 +15,6 @@ import { DatabaseService } from '../../services/DatabaseService';
 import { config } from '../../config';
 import { indexingQueue } from '../queues';
 
-
 /**
  * This processor handles the ingestion of emails for a single user's mailbox.
  * If an error occurs during processing (e.g., an API failure),

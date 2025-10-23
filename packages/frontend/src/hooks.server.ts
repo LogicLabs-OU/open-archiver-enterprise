@@ -23,9 +23,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.accessToken = null;
 	}
 	if (import.meta.env.VITE_ENTERPRISE_MODE === true) {
-		event.locals.enterpriseMode = true
+		event.locals.enterpriseMode = true;
 	} else {
-		event.locals.enterpriseMode = false
+		event.locals.enterpriseMode = false;
 	}
 
 	return resolve(event);

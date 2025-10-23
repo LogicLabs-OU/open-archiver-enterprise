@@ -44,7 +44,8 @@ export class SettingsService {
 
 		const changedFields = Object.keys(newConfig).filter(
 			(key) =>
-				currentConfig[key as keyof SystemSettings] !== newConfig[key as keyof SystemSettings]
+				currentConfig[key as keyof SystemSettings] !==
+				newConfig[key as keyof SystemSettings]
 		);
 
 		if (changedFields.length > 0) {

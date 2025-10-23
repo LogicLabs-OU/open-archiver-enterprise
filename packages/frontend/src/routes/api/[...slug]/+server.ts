@@ -22,7 +22,10 @@ const handleRequest: RequestHandler = async ({ request, params, fetch }) => {
 		return response;
 	} catch (error) {
 		console.error('Proxy request failed:', error);
-		return json({ message: `Failed to connect to the backend service. ${JSON.stringify(error)}` }, { status: 500 });
+		return json(
+			{ message: `Failed to connect to the backend service. ${JSON.stringify(error)}` },
+			{ status: 500 }
+		);
 	}
 };
 

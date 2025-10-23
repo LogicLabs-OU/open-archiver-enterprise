@@ -16,9 +16,7 @@ export const attachments = pgTable(
 			onDelete: 'cascade',
 		}),
 	},
-	(table) => [
-		index('source_hash_idx').on(table.ingestionSourceId, table.contentHashSha256),
-	]
+	(table) => [index('source_hash_idx').on(table.ingestionSourceId, table.contentHashSha256)]
 );
 
 export const emailAttachments = pgTable(

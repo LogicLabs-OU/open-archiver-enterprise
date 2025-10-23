@@ -67,7 +67,9 @@ export class StorageService implements IStorageProvider {
 
 	async put(path: string, content: Buffer | NodeJS.ReadableStream): Promise<void> {
 		const buffer =
-			content instanceof Buffer ? content : await streamToBuffer(content as NodeJS.ReadableStream);
+			content instanceof Buffer
+				? content
+				: await streamToBuffer(content as NodeJS.ReadableStream);
 		const encryptedContent = await this.encrypt(buffer);
 		return this.provider.put(path, encryptedContent);
 	}
