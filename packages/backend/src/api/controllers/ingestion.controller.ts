@@ -7,7 +7,6 @@ import {
 	SafeIngestionSource,
 } from '@open-archiver/types';
 import { logger } from '../../config/logger';
-import { config } from '../../config';
 import { UserService } from '../../services/UserService';
 import { checkDeletionEnabled } from '../../helpers/deletionGuard';
 
@@ -25,9 +24,7 @@ export class IngestionController {
 	}
 
 	public create = async (req: Request, res: Response): Promise<Response> => {
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
+
 		try {
 			const dto: CreateIngestionSourceDto = req.body;
 			const userId = req.user?.sub;
@@ -81,9 +78,7 @@ export class IngestionController {
 	};
 
 	public update = async (req: Request, res: Response): Promise<Response> => {
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
+
 		try {
 			const { id } = req.params;
 			const dto: UpdateIngestionSourceDto = req.body;
@@ -108,9 +103,7 @@ export class IngestionController {
 	};
 
 	public delete = async (req: Request, res: Response): Promise<Response> => {
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
+
 		try {
 			checkDeletionEnabled();
 			const { id } = req.params;
@@ -136,9 +129,7 @@ export class IngestionController {
 	};
 
 	public triggerInitialImport = async (req: Request, res: Response): Promise<Response> => {
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
+
 		try {
 			const { id } = req.params;
 			await IngestionService.triggerInitialImport(id);
@@ -153,9 +144,7 @@ export class IngestionController {
 	};
 
 	public pause = async (req: Request, res: Response): Promise<Response> => {
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
+
 		try {
 			const { id } = req.params;
 			const userId = req.user?.sub;
@@ -184,9 +173,7 @@ export class IngestionController {
 	};
 
 	public triggerForceSync = async (req: Request, res: Response): Promise<Response> => {
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
+
 		try {
 			const { id } = req.params;
 			const userId = req.user?.sub;

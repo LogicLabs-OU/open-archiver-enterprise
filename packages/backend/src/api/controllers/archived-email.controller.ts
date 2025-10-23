@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { ArchivedEmailService } from '../../services/ArchivedEmailService';
-import { config } from '../../config';
 import { UserService } from '../../services/UserService';
 import { checkDeletionEnabled } from '../../helpers/deletionGuard';
 
@@ -60,9 +59,6 @@ export class ArchivedEmailController {
 	};
 
 	public deleteArchivedEmail = async (req: Request, res: Response): Promise<Response> => {
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
 		try {
 			checkDeletionEnabled();
 			const { id } = req.params;

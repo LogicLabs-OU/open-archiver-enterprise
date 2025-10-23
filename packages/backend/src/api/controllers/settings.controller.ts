@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
 import { SettingsService } from '../../services/SettingsService';
-import { config } from '../../config';
 import { UserService } from '../../services/UserService';
 
 const settingsService = new SettingsService();
@@ -19,9 +18,6 @@ export const getSystemSettings = async (req: Request, res: Response) => {
 export const updateSystemSettings = async (req: Request, res: Response) => {
 	try {
 		// Basic validation can be performed here if necessary
-		if (config.app.isDemo) {
-			return res.status(403).json({ message: req.t('errors.demoMode') });
-		}
 		if (!req.user || !req.user.sub) {
 			return res.status(401).json({ message: 'Unauthorized' });
 		}
