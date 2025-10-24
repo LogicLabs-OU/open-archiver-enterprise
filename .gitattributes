@@ -1,4 +1,5 @@
 LICENSE merge=ours
 README.md merge=ours
+.github/workflows=ours
 LICENSE-OpenArchiver-Commercial.txt merge=ours
 docker-compose.enterprise.yml merge=ours
