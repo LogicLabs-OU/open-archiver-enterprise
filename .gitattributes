@@ -1,0 +1,4 @@
+LICENSE merge=ours
+README.md merge=ours
+LICENSE-OpenArchiver-Commercial.txt merge=ours
+docker-compose.enterprise.yml merge=ours

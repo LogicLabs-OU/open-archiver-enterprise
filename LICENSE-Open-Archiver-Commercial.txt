@@ -1,0 +1,48 @@
+The Open Archiver Commercial License 
+Copyright © 2025 LogicLabs OÜ, All Rights Reserved.
+
+This License (the “License”) governs your use of the software provided under this License (the “Software”).
+
+1. Definitions
+
+"Licensor" means the copyright holder or entity authorized by the copyright holder that is granting this License.
+
+"You" (or "Your") means an individual or entity exercising rights under this License.
+
+"Non-Production Use" means use of the Software for internal evaluation, testing, development, or demonstration purposes. It explicitly excludes any Production Use.
+
+"Production Use" means using the Software in a live environment, for any commercial purpose, for processing live data, or to provide services to third parties (including as part of a "Software as a Service" or "Platform as a Service" offering).
+
+"Derivative Works" means any work based on or derived from the Software, including modifications, enhancements, or translations.
+
+2. License Grant
+
+Subject to the terms and conditions of this License, the Licensor hereby grants You a non-exclusive, non-transferable, worldwide, royalty-free right to:
+
+a) Copy, modify, and create Derivative Works of the Software. b) Redistribute copies of the Software or Your Derivative Works. c) Make Non-Production Use of the Software.
+
+3. License Restrictions and Commercial Use
+
+Any use of the Software not expressly granted in Section 2 is prohibited.
+
+This License does not grant You any right to make Production Use of the Software. If Your use of the Software constitutes Production Use, You must purchase a separate commercial license from the Licensor or its authorized resellers, or You must refrain from all use of the Software.
+
+4. Distribution and Copies
+
+All copies of the Software and any Derivative Works, in whole or in part, are subject to this License. You must conspicuously display a copy of this License on each original or modified copy of the Software or Derivative Work that You distribute. If You receive the Software in original or modified form from a third party, the terms and conditions set forth in this License apply to Your use of that work.
+
+5. Termination
+
+Any use of the Software in violation of this License will automatically terminate Your rights under this License. Upon termination, You must cease all use of the Software and destroy all copies in Your possession.
+
+6. Trademarks
+
+This License does not grant You any right to use any trademarks, service marks, or logos of the Licensor or its affiliates.
+
+7. Disclaimer of Warranty
+
+TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ON AN “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND TITLE. YOU BEAR THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE.
+
+8. Limitation of Liability
+
+TO THE EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL THE LICENSOR BE LIABLE TO YOU FOR ANY DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
